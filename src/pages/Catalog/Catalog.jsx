@@ -32,7 +32,12 @@ const Catalog = () => {
 
   const makes = [...new Set(allcarAdverts.map(carAdvert => carAdvert.make))];
   const prices = [
-    ...new Set(allcarAdverts.map(carAdvert => parseFloat(carAdvert.rentalPrice.replace('$', '')))),
+    ...new Set(allcarAdverts.map(carAdvert => {
+      if (carAdvert.rentalPrice) {
+        return parseFloat(carAdvert.rentalPrice.replace('$', ''));
+      }
+      return null;
+    }).filter(price => price !== null))
   ];
   const mileage = [...new Set(allcarAdverts.map(carAdvert => carAdvert.mileage))];
   const minMileage = Math.min(...mileage);

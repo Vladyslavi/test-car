@@ -22,78 +22,59 @@ const defaultImageURL = '../../img/unknown-vehicle.png';
 
 const AdvertsItems = ({ carAdverts }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const dispatch = useDispatch();
   const favorites = useSelector(state => state.favorites.favorites);
 
-  const [isFavorite, setIsFavorite] = useState(false);
-  const isShortMake = carAdverts.make.length <= 9;
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
-
-  const {
-    make,
-    model,
-    year,
-    rentalPrice,
-    address,
-    functionalities,
-    rentalCompany,
-    type,
-    mileage,
-    id,
-  } = carAdverts;
-
-  const addressWords = address.split(' ');
-  const lastTwoWords = addressWords.slice(-2).join(' | ');
-
-  const firstFunctionality = functionalities[0];
-
   useEffect(() => {
-    const isAlreadyFavorite = favorites.some(
-      favorite => favorite.id === carAdverts.id
-    );
-    setIsFavorite(isAlreadyFavorite);
+    if (carAdverts) {
+      const isAlreadyFavorite = favorites.some(
+        favorite => favorite.id === carAdverts.id
+      );
+      setIsFavorite(isAlreadyFavorite);
+    }
   }, [favorites, carAdverts]);
 
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
   const toggleFavorite = () => {
-    if (isFavorite) {
+    if (isFavorite && carAdverts) {
       dispatch(removeFavorites(carAdverts.id));
       toast.warning('Ad removed from favorites.');
-    } else {
+    } else if (carAdverts) {
       dispatch(addFavorites(carAdverts));
       toast.success('Ad added to favorites.');
     }
     setIsFavorite(!isFavorite);
   };
 
-  return (
+  return carAdverts ? (
     <Item>
       <ImageContainer>
-        <Img src={carAdverts.img || defaultImageURL} alt={make} width={274} />
+        <Img src={carAdverts.img || defaultImageURL} alt={carAdverts.make} width={274} />
         <HeartBtn onClick={toggleFavorite}>
           {isFavorite ? <SvgHeart /> : <SvgHeartEmpty />}
         </HeartBtn>
       </ImageContainer>
       <Title>
-        {make}
-        {isShortMake && <Span>{model}</Span>}, {year}{' '}
-        <SpanPrice>{rentalPrice}</SpanPrice>
+        {carAdverts.make}
+        {carAdverts.make.length <= 9 && <Span>{carAdverts.model}</Span>}, {carAdverts.year}{' '}
+        <SpanPrice>{carAdverts.rentalPrice}</SpanPrice>
       </Title>
       <TextAboutContainer>
         <TextAbout>
-          {lastTwoWords} | {rentalCompany} | {type} | {make} | {mileage} |{' '}
-          {firstFunctionality}
+          {carAdverts.address.split(' ').slice(-2).join(' | ')} | {carAdverts.rentalCompany} | {carAdverts.type} | {carAdverts.make} | {carAdverts.mileage} |{' '}
+          {carAdverts.functionalities[0]}
         </TextAbout>
       </TextAboutContainer>
-      <Buttons onClick={() => toggleModal(id)} text="Learn More" />
+      <Buttons onClick={() => toggleModal(carAdverts.id)} text="Learn More" />
       {isModalOpen && (
         <Modal openModal={toggleModal}>
-          <CarInfo id={id} carAdverts={carAdverts} />
+          <CarInfo id={carAdverts.id} carAdverts={carAdverts} />
         </Modal>
       )}
-
     </Item>
-  );
+  ) : null;
 };
 
 export default AdvertsItems;
