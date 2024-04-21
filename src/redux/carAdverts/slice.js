@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchall } from './operations';
+import { fetchAll } from './operations';
 
 
 const initialState = {
@@ -13,13 +13,13 @@ const carAdvertsSlice = createSlice({
   initialState: initialState,
   extraReducers: builder => {
     builder
-      .addCase(fetchall.pending)
-      .addCase(fetchall.fulfilled, (state, action) => {
+      .addCase(fetchAll.pending)
+      .addCase(fetchAll.fulfilled, (state, action) => {
         state.items = action.payload;
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(fetchall.rejected);
+      .addCase(fetchAll.rejected);
   },
 });
 

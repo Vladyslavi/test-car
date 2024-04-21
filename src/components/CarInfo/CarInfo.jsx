@@ -17,7 +17,7 @@ import {
   ButtonLink,
 } from './CarInfo.styled';
 
-export const CarInfo = ({ advert }) => {
+export const CarInfo = ({ CarAdvert }) => {
   const {
     id,
     img,
@@ -34,7 +34,7 @@ export const CarInfo = ({ advert }) => {
     functionalities,
     rentalConditions,
     mileage,
-  } = advert;
+  } = CarAdvert;
 
   const conditions = rentalConditions.split('\n');
   const age = conditions[0].match(/\d+/);

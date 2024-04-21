@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchall } from '../../redux/carAdverts/operations';
+import { fetchAll } from '../../redux/carAdverts/operations';
 import { getcarAdverts } from '../../redux/carAdverts/selectors';
 import { Container, ListItems } from './AdvertsList.styled';
 import AdvertsItems from '../AdvertsItems/AdvertsItems';
@@ -19,7 +19,7 @@ const AdvertsList = ({ filteredAdverts }) => {
     : carAdverts.slice(0, startIndex + itemsPerPage);
 
   useEffect(() => {
-    dispatch(fetchall());
+    dispatch(fetchAll());
   }, [dispatch]);
 
   const loadMore = () => {

@@ -4,7 +4,7 @@ import FilteredForm from '../../components/FilteredForm/FilteredForm';
 import AdvertsList from '../../components/AdvertsList/AdvertsList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getcarAdverts } from '../../redux/carAdverts/selectors';
-import { fetchall } from '../../redux/carAdverts/operations';
+import { fetchAll } from '../../redux/carAdverts/operations';
 import { ToastContainer } from 'react-toastify';
 import { useCatalog } from '../../utils';
 
@@ -27,7 +27,7 @@ const Catalog = () => {
   } = useCatalog(initialFilters, allcarAdverts);
 
   useEffect(() => {
-    dispatch(fetchall());
+    dispatch(fetchAll());
   }, [dispatch]);
 
   const makes = [...new Set(allcarAdverts.map(carAdvert => carAdvert.make))];

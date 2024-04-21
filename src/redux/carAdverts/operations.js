@@ -6,8 +6,8 @@ axios.defaults.baseURL = 'https://6625235b04457d4aaf9df8ff.mockapi.io';
 
 
 
-export const fetchall = createAsyncThunk(
-  'carAdverts/fetchall',
+export const fetchAll = createAsyncThunk(
+  'carAdverts/fetchAll',
   async (_, thunkApi) => {
     try {
       const { data } = await axios.get('/carAdverts');
