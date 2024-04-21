@@ -40,10 +40,10 @@ const AdvertsItems = ({ carAdverts }) => {
   const toggleFavorite = () => {
     if (isFavorite && carAdverts) {
       dispatch(removeFavorites(carAdverts.id));
-      toast.warning('Ad removed from favorites.');
+      toast.warning('removed from favorites.');
     } else if (carAdverts) {
       dispatch(addFavorites(carAdverts));
-      toast.success('Ad added to favorites.');
+      toast.success('added to favorites.');
     }
     setIsFavorite(!isFavorite);
   };
